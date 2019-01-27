@@ -1,0 +1,4 @@
+0:Willkommen
+1=Hallo
+2=Hey
+1:Du hast 1 gedrückt
