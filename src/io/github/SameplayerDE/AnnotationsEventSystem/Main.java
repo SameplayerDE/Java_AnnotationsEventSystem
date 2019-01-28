@@ -25,13 +25,6 @@ public class Main extends Game {
     public void run() {
 
         getGameManager().callEvent(new GameStartEvent(this));
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            p = new Player (reader.readLine());
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
 
