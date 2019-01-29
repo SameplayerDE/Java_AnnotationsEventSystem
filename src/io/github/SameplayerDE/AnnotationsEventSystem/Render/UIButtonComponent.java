@@ -13,9 +13,17 @@ public class UIButtonComponent extends UIComponent {
     }
 
 
-    public void draw() {}
+    public void draw() {
+
+        System.out.println("-----");
+        System.out.println("| " + text + " |");
+        System.out.println("-----");
+
+    }
     
 
-    public void action() {}
+    public void action() {
+
+    }
 
 }

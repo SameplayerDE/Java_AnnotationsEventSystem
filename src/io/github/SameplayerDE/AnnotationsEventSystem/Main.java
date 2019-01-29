@@ -1,9 +1,6 @@
 package io.github.SameplayerDE.AnnotationsEventSystem;
 
-import io.github.SameplayerDE.AnnotationsEventSystem.Classes.Game;
-import io.github.SameplayerDE.AnnotationsEventSystem.Classes.GameLoader;
-import io.github.SameplayerDE.AnnotationsEventSystem.Classes.GameManager;
-import io.github.SameplayerDE.AnnotationsEventSystem.Classes.Player;
+import io.github.SameplayerDE.AnnotationsEventSystem.Classes.*;
 import io.github.SameplayerDE.AnnotationsEventSystem.Events.GameEvents.GameStartEvent;
 
 import java.io.BufferedReader;
@@ -17,7 +14,8 @@ public class Main extends Game {
 
     @Override
     public void onEnable() {
-        System.out.println("Hello");
+        super.onEnable();
+        //System.out.println("Hello");
         getGameManager().registerEvents(new ListenerGameStart());
         run();
     }
@@ -25,6 +23,18 @@ public class Main extends Game {
     public void run() {
 
         getGameManager().callEvent(new GameStartEvent(this));
+        try {
+            int i = Integer.parseInt(reader.readLine());
+            for (StoryItem item : storyLoader.storyItemHashSet) {
+                if (item.getID() == i) {
+                    item.print();
+                }else{
+                    continue;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

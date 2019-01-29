@@ -21,7 +21,7 @@ public class StoryLoader {
             boolean done = false;
 
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+                //System.out.println(line);
                 if (line.startsWith("#BEGIN")) {
                     item.add(line);
                 }else if (!line.startsWith("#END")) {
@@ -62,12 +62,12 @@ public class StoryLoader {
                 }
             }
 
-            for (StoryItem storyItem : storyItemHashSet) {
+            /**for (StoryItem storyItem : storyItemHashSet) {
                 System.out.println(storyItem.getTitle() + " - " + storyItem.getID());
                 for (Integer value : storyItem.getItems().keySet()) {
                     System.out.println(" ---> " + value + ": " + storyItem.getItems().get(value));
                 }
-            }
+            }**/
 
         }catch (Exception e) {
             e.printStackTrace();

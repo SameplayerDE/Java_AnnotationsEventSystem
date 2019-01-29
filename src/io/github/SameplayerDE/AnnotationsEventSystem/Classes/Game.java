@@ -7,9 +7,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashSet;
 
-public abstract class Game extends Object{
+public abstract class Game extends Object {
 
     protected static GameManager gameManager = new GameManager();
+    protected static StoryLoader storyLoader = new StoryLoader();
+    protected static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     private static HashSet<Class> children = new HashSet<>();
 
@@ -47,7 +49,21 @@ public abstract class Game extends Object{
     }
 
     public void onEnable() {
+        for (StoryItem item : storyLoader.storyItemHashSet) {
+            if (item.getID() == 0) {
+                item.print();
+                break;
+            }
+        }
+    }
 
+    protected String readLine() {
+        try {
+            return reader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     protected void add(Class c) {

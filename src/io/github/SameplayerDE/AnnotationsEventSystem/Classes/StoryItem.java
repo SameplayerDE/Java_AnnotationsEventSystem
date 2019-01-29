@@ -31,4 +31,11 @@ public class StoryItem {
         return items;
     }
 
+    public void print() {
+        System.out.println(title);
+        for (Integer index : items.keySet()) {
+            System.out.println(index + " -> " + items.get(index));
+        }
+    }
+
 }

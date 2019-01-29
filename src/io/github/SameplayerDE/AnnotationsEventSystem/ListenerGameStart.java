@@ -9,8 +9,8 @@ public class ListenerGameStart implements Listener {
 
     @EventHandler
     public void onStart(GameStartEvent event) {
-        System.out.println("Spiel wurde gestartet!");
-        StoryLoader storyLoader = new StoryLoader();
+        //System.out.println("Spiel wurde gestartet!");
+        //StoryLoader storyLoader = new StoryLoader();
     }
 
 }
