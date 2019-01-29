@@ -1,4 +1,4 @@
-package io.github.SameplayerDE.Render;
+package io.github.SameplayerDE.AnnotationsEventSystem.Render;
 
 public class UIButtonComponent extends UIComponent {
 
@@ -12,10 +12,10 @@ public class UIButtonComponent extends UIComponent {
     
     }
 
-    @Overwrite
+
     public void draw() {}
     
-    @Overwrite
+
     public void action() {}
 
 }

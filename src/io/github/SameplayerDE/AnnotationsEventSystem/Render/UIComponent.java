@@ -1,4 +1,4 @@
-package io.github.SameplayerDE.Render;
+package io.github.SameplayerDE.AnnotationsEventSystem.Render;
 
 public abstract class UIComponent {
 
