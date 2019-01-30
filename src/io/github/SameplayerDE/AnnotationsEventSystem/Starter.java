@@ -8,4 +8,9 @@ public class Starter extends Game {
     public void onEnable() {
         System.out.println("Hey");
     }
+
+    @Override
+    public void run() {
+
+    }
 }
