@@ -10,11 +10,12 @@ import java.io.InputStreamReader;
 
 public class Main extends Game {
 
-    private Player p;
+    private StoryManager storyManager;
 
     @Override
     public void onEnable() {
         super.onEnable();
+        storyManager = new StoryManager(storyLoader);
         //System.out.println("Hello");
         getGameManager().registerEvents(new ListenerGameStart());
         run();
