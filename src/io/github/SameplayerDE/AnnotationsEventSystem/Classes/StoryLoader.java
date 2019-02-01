@@ -14,7 +14,7 @@ import java.util.Iterator;
 public class StoryLoader {
 
     public HashSet<StoryItem> storyItemHashSet;
-    private final String storyFilePath = "src/story.txt";
+    private final String storyFilePath = "story.txt";
 
     private boolean storyFileRead = false;
     private ArrayList<String> storyFileContent;
@@ -26,7 +26,7 @@ public class StoryLoader {
 
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new FileReader(new File(storyFilePath)));
+            reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(storyFilePath)));
             String line = "";
             while ((line = reader.readLine()) != null) {
                 //System.out.println("READER -> " + line);
@@ -78,7 +78,16 @@ public class StoryLoader {
                     }
                     if (s.startsWith(StoryItemFileField.ITEM)) {
                         //sub.put(Integer.parseInt(s.substring(6, 9)), s.substring(10));
-                        storyItem.add(Integer.parseInt(s.substring(6, 9)), StoryItemField.TITLE, s.substring(10));
+                        int key = storyItem.getBasicItems().size();
+                        int subID = Integer.parseInt(s.substring(6, 9));
+                        String text = "";
+                        if (s.length() < 10) {
+                            text = "EMPTY";
+                        }else{
+                           text = s.substring(10);
+                        }
+                        storyItem.add(key, StoryItemField.ID, subID);
+                        storyItem.add(key, StoryItemField.TITLE, text);
                     }
                     if (s.startsWith(StoryItemFileField.FLAG)) {
                         storyItem.addFlag(StoryItemFlag.valueOf(s.substring(6).toUpperCase()));
@@ -95,14 +104,14 @@ public class StoryLoader {
             }
         }
 
-        /**
+/**
         for (StoryItem storyItem : storyItemHashSet) {
         System.out.println(storyItem.getTitle() + " - " + storyItem.getID());
-        for (Integer value : storyItem.getItems().keySet()) {
-        System.out.println(" ---> " + value + ": " + storyItem.getItems().get(value));
+        for (Integer value : storyItem.getBasicItems().keySet()) {
+        System.out.println(" ---> " + value + ": " + storyItem.getBasicItems().get(value));
         }
         }
-         **/
+**/
 
         polishItems();
 
@@ -113,10 +122,12 @@ public class StoryLoader {
         for (StoryItem item : storyItemHashSet) {
             iterator = item.getBasicItems().keySet().iterator();
             while (iterator.hasNext()) {
-                int id = iterator.next();
-                item.getBasicItems().put(id, StoryItemField.ITEM, getItemByID(id));
-                //System.out.println("Adding " + id + " TO " + item.getID());
+                int key = iterator.next();
+                int ID = Integer.parseInt(String.valueOf(item.getBasicItems().get(key, 0)));
+                item.getBasicItems().put(key, StoryItemField.ITEM, getItemByID(ID));
+                //System.out.println("Adding " + ID + " TO " + item.getID());
             }
+
         }
     }
 

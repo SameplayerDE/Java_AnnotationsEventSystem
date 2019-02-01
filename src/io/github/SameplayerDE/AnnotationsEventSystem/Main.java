@@ -3,6 +3,7 @@ package io.github.SameplayerDE.AnnotationsEventSystem;
 import com.sun.xml.internal.ws.util.StringUtils;
 import io.github.SameplayerDE.AnnotationsEventSystem.Classes.*;
 import io.github.SameplayerDE.AnnotationsEventSystem.Enums.InputState;
+import io.github.SameplayerDE.AnnotationsEventSystem.Enums.StoryItemField;
 import io.github.SameplayerDE.AnnotationsEventSystem.Enums.StoryItemFlag;
 import io.github.SameplayerDE.AnnotationsEventSystem.Events.GameEvents.GameStartEvent;
 
@@ -19,10 +20,11 @@ public class Main extends Game {
     @Override
     public void onEnable() {
         super.onEnable();
-        logger = new Logger().setLevel(Logger.Level.DEBUG);
+        logger = new Logger().setLevel(Logger.Level.INFO);
         logger.debug("Main onEnable called");
         getGameManager().registerEvents(new ListenerGameStart());
         start();
+
     }
 
     @Override
@@ -61,14 +63,13 @@ public class Main extends Game {
                 Iterator<Integer> iterator = storyManager.getCurrentItem().getBasicItems().keySet().iterator();
                 while (iterator.hasNext()) {
                     int i = iterator.next();
-                    if (i == option) {
-                        storyManager.setCurrentItem(storyLoader.getItemByID(i));
+                    if ((i+1) == option) {
+                        storyManager.setCurrentItem(storyLoader.getItemByID((Integer) storyManager.getCurrentItem().getBasicItems().get(i, StoryItemField.ID)));
                         storyManager.print();
                         setInputState(InputState.OPEN);
                         break;
                     }
                     if (!iterator.hasNext()) {
-                        clearScreen();
                         logger.debug("NO VALID OPERATOR");
                         setInputState(InputState.OPEN);
                     }

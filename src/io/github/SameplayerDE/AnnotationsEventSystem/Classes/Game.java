@@ -23,7 +23,7 @@ public abstract class Game extends Object implements Runnable {
 
     public static void main(String[] args) throws IOException {
 
-        BufferedReader reader = new BufferedReader(new FileReader(new File("src/game.txt")));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(Game.class.getClassLoader().getResourceAsStream("game.txt")));
 
         String line = "";
         while ((line = reader.readLine()) != null) {
@@ -119,11 +119,6 @@ public abstract class Game extends Object implements Runnable {
 
     public static void println(String s) {
         System.out.println(s);
-    }
-
-    public static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
     }
 
 }

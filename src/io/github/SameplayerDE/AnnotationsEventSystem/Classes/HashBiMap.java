@@ -31,6 +31,10 @@ public class HashBiMap<K> {
         return (!(position > get(key).length)) && saves.containsKey(key) ? saves.entrySet().iterator().next().getValue()[position] : null;
     }
 
+    public int size() {
+        return saves.size();
+    }
+
     public Object[] get(K key) {
         values = saves.containsKey(key) ? saves.get(key) : new Object[999];
         return saves.containsKey(key) ? values : null;

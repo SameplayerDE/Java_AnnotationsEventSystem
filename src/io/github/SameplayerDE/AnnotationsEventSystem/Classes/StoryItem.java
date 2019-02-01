@@ -1,5 +1,7 @@
 package io.github.SameplayerDE.AnnotationsEventSystem.Classes;
 
+import io.github.SameplayerDE.AnnotationsEventSystem.Enums.StoryItemField;
+import io.github.SameplayerDE.AnnotationsEventSystem.Enums.StoryItemFileField;
 import io.github.SameplayerDE.AnnotationsEventSystem.Enums.StoryItemFlag;
 import io.github.SameplayerDE.AnnotationsEventSystem.Enums.StoryItemMessageType;
 
@@ -32,8 +34,13 @@ public class StoryItem {
         return this;
     }
 
-    public StoryItem add(int ID, int position, Object object) {
-        items.put(ID, position, object);
+    public StoryItem add(int key, int position, Object object) {
+        items.put(key, position, object);
+        return this;
+    }
+
+    public StoryItem add(int key, int ID, StoryItem storyItem) {
+
         return this;
     }
 
@@ -49,14 +56,32 @@ public class StoryItem {
         switch (messageType) {
             case SELF:
                 System.out.println("~* " + title + " *~");
-                for (Integer index : items.keySet()) {
-                    System.out.println(index + " -> " + items.get(index, 1));
+                if (!hasFlag(StoryItemFlag.INVISIBLE_ITEMS)) {
+                    System.out.println("-----Options------\n");
+                    if (items.size() == 1) {
+                        System.out.println(1 + " -> " + items.get(0, 1));
+                        System.out.println("\n------------------");
+                        break;
+                    }
+                    for (int i = 0; i < items.size(); i++) {
+                        System.out.println(i + 1 + " -> " + items.get(i, 1));
+                    }
+                    System.out.println("\n------------------");
                 }
                 break;
             case OTHER:
                 System.out.println(title);
-                for (Integer index : items.keySet()) {
-                    System.out.println(index + " -> " + items.get(index, 1));
+                if (!hasFlag(StoryItemFlag.INVISIBLE_ITEMS)) {
+                    System.out.println("-----Options------\n");
+                    if (items.size() == 1) {
+                        System.out.println(1 + " -> " + items.get(0, 1));
+                        System.out.println("\n------------------");
+                        break;
+                    }
+                    for (int i = 0; i < items.size(); i++) {
+                        System.out.println(i + 1 + " -> " + items.get(i, 1));
+                    }
+                    System.out.println("\n------------------");
                 }
                 break;
         }

@@ -10,7 +10,9 @@ public class Logger {
     }
 
     public void debug(String string) {
-        System.out.println("[DEBUG] " + string);
+        if (level.equals(Level.DEBUG)) {
+            System.out.println("[DEBUG] " + string);
+        }
     }
 
     public void info(String string) {
