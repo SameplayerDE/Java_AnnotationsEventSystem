@@ -1,5 +1,8 @@
 package io.github.SameplayerDE.AnnotationsEventSystem.Classes;
 
+import io.github.SameplayerDE.AnnotationsEventSystem.Events.Event;
+import io.github.SameplayerDE.AnnotationsEventSystem.Events.StoryEvents.StoryItemPrintEvent;
+
 public class StoryManager {
 
     private StoryItem currentItem;
@@ -20,6 +23,7 @@ public class StoryManager {
 
     public void print() {
         currentItem.print();
+        storyLoader.getGame().getGameManager().callEvent(new StoryItemPrintEvent(currentItem.getID()));
     }
 
     public StoryItem getCurrentItem() {

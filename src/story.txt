@@ -1,3 +1,13 @@
+//BEGIN ID int
+//TITLE Titel string
+//MSGTYPE Typ enum(SELF, OTHER, ANNOUNCER, TIP)
+//FLAG Flagge enum(ENTER, RETURN, INVISIBLE_ITEMS)
+//ITEM ID int(xxx) Beschreibung string @NULLALLOWED
+//ITEM * *
+//* * *
+//EVENT Event event
+//END ID int
+
 #BEGIN 0
 #TITLE Wo bin ich...
 #MSGTYPE SELF
@@ -17,11 +27,12 @@
 #TITLE Du stehst. Deine Beine sind schwach und können dich kaum gerade halten.
 #MSGTYPE OTHER
 #ITEM 003 "Hallo" rufen
-#ITEM 004 Nach einer Wand zum anlehnen suchen
+#ITEM 004 Nach etwas zum anlehnen suchen
 #END 2
 
 #BEGIN 3
 #TITLE Du rufst nach hilfe
+//#EVENT GameEvents.GameStartEvent
 #END 3
 
 #BEGIN 4

@@ -11,7 +11,7 @@ import java.util.HashSet;
 public abstract class Game extends Object implements Runnable {
 
     protected static GameManager gameManager = new GameManager();
-    protected static StoryLoader storyLoader = new StoryLoader();
+    protected static StoryLoader storyLoader;
     protected static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     protected static StoryManager storyManager;
     protected static Thread thread;
@@ -58,6 +58,7 @@ public abstract class Game extends Object implements Runnable {
 
         thread = new Thread(this);
 
+        storyLoader = new StoryLoader(this);
         storyManager = new StoryManager(storyLoader);
         storyManager.setCurrentItem(storyLoader.getItemByID(0));
         storyManager.print();

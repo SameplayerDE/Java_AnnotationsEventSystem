@@ -4,5 +4,7 @@ public enum StoryItemMessageType {
 
     SELF,
     OTHER,
+    TIP,
+    ANNOUNCER;
 
 }

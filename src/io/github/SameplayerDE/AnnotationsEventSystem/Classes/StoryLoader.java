@@ -4,6 +4,7 @@ import io.github.SameplayerDE.AnnotationsEventSystem.Enums.StoryItemField;
 import io.github.SameplayerDE.AnnotationsEventSystem.Enums.StoryItemFileField;
 import io.github.SameplayerDE.AnnotationsEventSystem.Enums.StoryItemFlag;
 import io.github.SameplayerDE.AnnotationsEventSystem.Enums.StoryItemMessageType;
+import io.github.SameplayerDE.AnnotationsEventSystem.Events.Event;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -19,14 +20,17 @@ public class StoryLoader {
     private boolean storyFileRead = false;
     private ArrayList<String> storyFileContent;
 
-    public StoryLoader() {
+    protected Game game;
+
+    public StoryLoader(Game game) {
 
         storyItemHashSet = new HashSet<>();
         storyFileContent = new ArrayList<>();
+        this.game = game;
 
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(storyFilePath)));
+            reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(storyFilePath), "UTF-8"));
             String line = "";
             while ((line = reader.readLine()) != null) {
                 //System.out.println("READER -> " + line);
@@ -53,7 +57,7 @@ public class StoryLoader {
                 item.add(line);
             } else if (!line.startsWith(StoryItemFileField.END)) {
                 item.add(line);
-            } else {
+            } else if (!line.startsWith("//")) {
                 item.add(line);
                 done = true;
             }
@@ -63,14 +67,21 @@ public class StoryLoader {
                 StoryItem storyItem = null;
                 String title = null;
                 HashMap<Integer, String> sub = new HashMap<>();
+                ArrayList<Event> events = new ArrayList<>();
 
                 for (String s : item) {
                     if (s.startsWith(StoryItemFileField.BEGIN)) {
                         ID = Integer.parseInt(s.substring(7));
                     }
                     if (s.startsWith(StoryItemFileField.TITLE)) {
-                        title = s.substring(7);
+                        title = GenericUtils.convertUmlaute2(s.substring(7));
+                        //System.out.println(title);
                         storyItem = new StoryItem(ID, title);
+                    }
+                    if (s.startsWith(StoryItemFileField.EVENT)) {
+                        String event = s.substring(7);
+                        storyItem.addEvent("io.github.SameplayerDE.AnnotationsEventSystem.Events." + event);
+                        System.out.println();
                     }
                     if (s.startsWith(StoryItemFileField.TYPE)) {
                         //sub.put(Integer.parseInt(s.substring(6, 9)), s.substring(10));
@@ -84,7 +95,7 @@ public class StoryLoader {
                         if (s.length() < 10) {
                             text = "EMPTY";
                         }else{
-                           text = s.substring(10);
+                            text = GenericUtils.convertUmlaute2(s.substring(10));
                         }
                         storyItem.add(key, StoryItemField.ID, subID);
                         storyItem.add(key, StoryItemField.TITLE, text);
@@ -196,4 +207,7 @@ public class StoryLoader {
         return null;
     }
 
+    public Game getGame() {
+        return game;
+    }
 }
