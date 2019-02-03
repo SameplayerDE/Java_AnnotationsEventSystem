@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.util.Iterator;
 
 public class Main extends Game {
@@ -20,8 +21,10 @@ public class Main extends Game {
     @Override
     public void onEnable() {
         super.onEnable();
+
         logger = new Logger().setLevel(Logger.Level.INFO);
         logger.debug("Main onEnable called");
+        logger.debug(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
         getGameManager().registerEvents(new ListenerGameStart());
         start();
 
@@ -35,6 +38,9 @@ public class Main extends Game {
         while (isRunning()) {
 
             if (getInputState().equals(InputState.OPEN)) {
+                if (storyManager.getCurrentItem().hasFlag(StoryItemFlag.TIMER)) {
+                    continue;
+                }
                 logger.debug("OPEN");
                 String input = readLine();
                 if (input.isEmpty() || input == null) {

@@ -22,7 +22,7 @@ public class StoryManager {
     }
 
     public void print() {
-        currentItem.print();
+        currentItem.print(this);
         storyLoader.getGame().getGameManager().callEvent(new StoryItemPrintEvent(currentItem.getID()));
     }
 

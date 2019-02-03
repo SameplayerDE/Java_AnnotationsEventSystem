@@ -1,5 +1,6 @@
 package io.github.SameplayerDE.AnnotationsEventSystem.Classes;
 
+import com.sun.xml.internal.bind.api.impl.NameConverter;
 import io.github.SameplayerDE.AnnotationsEventSystem.Enums.StoryItemField;
 import io.github.SameplayerDE.AnnotationsEventSystem.Enums.StoryItemFileField;
 import io.github.SameplayerDE.AnnotationsEventSystem.Enums.StoryItemFlag;
@@ -7,6 +8,7 @@ import io.github.SameplayerDE.AnnotationsEventSystem.Enums.StoryItemMessageType;
 import io.github.SameplayerDE.AnnotationsEventSystem.Events.Event;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -30,7 +32,11 @@ public class StoryLoader {
 
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(storyFilePath), "UTF-8"));
+            //reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(storyFilePath), "UTF-8"));
+            File f = new File(System.getProperty("java.class.path"));
+            File dir = f.getAbsoluteFile().getParentFile();
+            String path = dir.toString();
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(path + "/story.txt"), StandardCharsets.UTF_8));
             String line = "";
             while ((line = reader.readLine()) != null) {
                 //System.out.println("READER -> " + line);
@@ -72,6 +78,9 @@ public class StoryLoader {
                 for (String s : item) {
                     if (s.startsWith(StoryItemFileField.BEGIN)) {
                         ID = Integer.parseInt(s.substring(7));
+                    }
+                    if (s.startsWith(StoryItemFileField.TIMER)) {
+                        storyItem.setTimerDelay(Integer.parseInt(s.substring(7)));
                     }
                     if (s.startsWith(StoryItemFileField.TITLE)) {
                         title = GenericUtils.convertUmlaute2(s.substring(7));
